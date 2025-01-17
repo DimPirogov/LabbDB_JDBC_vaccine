@@ -4,14 +4,14 @@ public class DogOwner {
     private int dogOwnerId;
     private String name;
     private String phoneNumber;
-    private Address address;
+    private int addressId;
     private ArrayList<Dog> dogs;
 
-    public DogOwner(int dogOwnerId, String name, String phoneNumber, Address address) {
+    public DogOwner(int dogOwnerId, String name, String phoneNumber, int addressId) {
         this.dogOwnerId = dogOwnerId;
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.address = address;
+        this.addressId = addressId;
         this.dogs = new ArrayList<>();
     }
 
@@ -21,7 +21,7 @@ public class DogOwner {
                 "dogOwnerId=" + dogOwnerId +
                 ", name='" + name + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
-                ", address=" + address +
+                ", address=" + addressId +
                 ", dogs=" + dogs +
                 '}';
     }
@@ -50,11 +50,11 @@ public class DogOwner {
         this.phoneNumber = phoneNumber;
     }
 
-    public Address getAddress() {
-        return address;
+    public int getAddressId() {
+        return addressId;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddressId(Address address) {
+        this.addressId = addressId;
     }
 }

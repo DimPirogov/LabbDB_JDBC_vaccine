@@ -52,4 +52,5 @@ public class Address {
     public void setPostalCode(int postalCode) {
         this.PostalCode = postalCode;
     }
+
 }

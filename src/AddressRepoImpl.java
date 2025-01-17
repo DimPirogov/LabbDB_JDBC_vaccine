@@ -6,14 +6,16 @@ import java.util.Optional;
 public class AddressRepoImpl implements AddressRepository {
 
     private Connection conn;
-    private PreparedStatement allPS, idPS, deletePS;
+    private PreparedStatement allPS, savePS, idPS, deletePS, updatePS;
 
     public AddressRepoImpl() {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/world", "root", "Workbench!");
             allPS = conn.prepareStatement("SELECT * FROM address");
+            savePS = conn.prepareStatement("INSERT INTO address (street, city, postalCode) VALUES (?, ?, ?)");
             idPS = conn.prepareStatement("SELECT * FROM address WHERE addressId = ?");
-
+            deletePS = conn.prepareStatement("DELETE FROM address WHERE addressId = ?");
+            updatePS = conn.prepareStatement("UPDATE address SET street = ? WHERE addressId = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -21,7 +23,14 @@ public class AddressRepoImpl implements AddressRepository {
 
     @Override
     public void save(Address a) {
-        // Save address to database
+        try {
+            savePS.setString(1, a.getStreet());
+            savePS.setString(2, a.getCity());
+            savePS.setInt(3, a.getPostalCode());
+            savePS.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -76,7 +85,13 @@ public class AddressRepoImpl implements AddressRepository {
 
     @Override
     public boolean updateStreet(int id, String street) {
-        // Update street by id in database
-        return false;
+        try {
+            updatePS.setString(1, street);
+            updatePS.setInt(2, id);
+            int rows = updatePS.executeUpdate();
+            return rows > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
