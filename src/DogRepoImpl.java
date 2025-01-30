@@ -12,11 +12,11 @@ public class DogRepoImpl implements DogRepository {
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost/world", "root", "Workbench!");
             allPS = conn.prepareStatement("SELECT * FROM dogs");
-            savePS = conn.prepareStatement("INSERT INTO dogs (name, breed, dateOfBirth, ownerId) VALUES (?, ?, ?, ?)");
-            idPS = conn.prepareStatement("SELECT * FROM dogs WHERE id = ?");
-            deletePS = conn.prepareStatement("DELETE FROM dogs WHERE id = ?");
-            updateNamePS = conn.prepareStatement("UPDATE dogs SET name = ? WHERE id = ?");
-            updateVaccinatedPS = conn.prepareStatement("UPDATE dogs SET dateVaccinated = ? WHERE id = ?");
+            savePS = conn.prepareStatement("INSERT INTO dogs (name, breed, vaccineDate, ownerId) VALUES (?, ?, ?, ?)");
+            idPS = conn.prepareStatement("SELECT * FROM dogs WHERE dogId = ?");
+            deletePS = conn.prepareStatement("DELETE FROM dogs WHERE dogId = ?");
+            updateNamePS = conn.prepareStatement("UPDATE dogs SET name = ? WHERE dogId = ?");
+            updateVaccinatedPS = conn.prepareStatement("UPDATE dogs SET dateVaccinated = ? WHERE dogId = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -46,10 +46,10 @@ public class DogRepoImpl implements DogRepository {
             ResultSet rs = allPS.executeQuery();
             while (rs.next()) {
                 Dog d = new Dog(
-                        rs.getInt("id"),
+                        rs.getInt("dogId"),
                         rs.getString("name"),
                         rs.getString("breed"),
-                        rs.getDate("dateOfBirth").toLocalDate(),
+                        rs.getDate("vaccineDate").toLocalDate(),
                         rs.getInt("ownerId"));
                 list.add(d);
             }
@@ -69,7 +69,7 @@ public class DogRepoImpl implements DogRepository {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("breed"),
-                        rs.getDate("dateOfBirth").toLocalDate(),
+                        rs.getDate("vaccineDate").toLocalDate(),
                         rs.getInt("ownerId"));
                 return Optional.of(d);
             } else {

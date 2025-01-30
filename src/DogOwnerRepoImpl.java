@@ -14,9 +14,9 @@ public class DogOwnerRepoImpl implements DogOwnerRepository{
             conn = DriverManager.getConnection("jdbc:mysql://localhost/world", "root", "Workbench!");
             allPS = conn.prepareStatement("SELECT * FROM dog_owner");
             savePS = conn.prepareStatement("INSERT INTO dog_owner (name, phone, addressId) VALUES (?, ?, ?)");
-            idPS = conn.prepareStatement("SELECT * FROM dog_owner WHERE id = ?");
-            deletePS = conn.prepareStatement("DELETE FROM dog_owner WHERE id = ?");
-            updatePS = conn.prepareStatement("UPDATE dog_owner SET name = ? WHERE id = ?");
+            idPS = conn.prepareStatement("SELECT * FROM dog_owner WHERE dogOwnerId = ?");
+            deletePS = conn.prepareStatement("DELETE FROM dog_owner WHERE dogOwnerId = ?");
+            updatePS = conn.prepareStatement("UPDATE dog_owner SET name = ? WHERE dogOwnerId = ?");
             getDogsByOwnerIdPS = conn.prepareStatement("SELECT * FROM dog WHERE ownerId = ?");
         } catch (SQLException e) {
             throw new RuntimeException(e);
